@@ -29,4 +29,4 @@ RUN sed -ri 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-avail
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "if [ \"${PORT:-10000}\" != 10000 ]; then sed -ri \"s/10000/${PORT}/g\" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf; fi; exec apache2-foreground"]
+CMD ["sh", "-c", "php spark migrate && if [ \"${PORT:-10000}\" != 10000 ]; then sed -ri \"s/10000/${PORT}/g\" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf; fi; exec apache2-foreground"]
