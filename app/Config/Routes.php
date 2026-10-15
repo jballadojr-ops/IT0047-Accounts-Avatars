@@ -13,6 +13,10 @@ $routes->get('customers', 'Home::customers');
 $routes->get('users', 'Home::users');
 $routes->get('email', 'Home::email');
 
+// Singular aliases for the customer and user directories.
+$routes->get('customer', 'Home::customers');
+$routes->get('user', 'Home::users');
+
 // Customer account routes
 $routes->get('customers/new', 'Home::newCustomer');
 $routes->post('customers/create', 'Home::createCustomer');

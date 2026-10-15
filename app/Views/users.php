@@ -1,69 +1,44 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>User Accounts</title>
+    <title>Users | Account Hub</title>
     <link rel="stylesheet" href="<?= base_url('style.css') ?>">
 </head>
 <body>
-    <h1>User Accounts</h1>
-
-    <?php if (session()->getFlashdata('success')): ?>
-        <p style="color: green;">
-            <?= esc(session()->getFlashdata('success')) ?>
-        </p>
-    <?php endif; ?>
-
-    <p>
-        <a href="<?= site_url('users/new') ?>">+ Add New User</a>
-    </p>
-
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Avatar</th>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Full Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($users)): ?>
-                <?php foreach ($users as $user): ?>
-                    <?php
-                        $avatar = !empty($user['avatar'])
-                            ? $user['avatar']
-                            : 'Face1.jpeg';
-                    ?>
-                    <tr>
-                        <td>
-                            <img
-                                src="<?= base_url('uploads/avatars/' . rawurlencode($avatar)) ?>"
-                                alt="Avatar for <?= esc($user['full_name']) ?>"
-                                width="55"
-                                height="55"
-                                style="object-fit: cover; border-radius: 50%;"
-                            >
-                        </td>
-                        <td><?= esc($user['id']) ?></td>
-                        <td><?= esc($user['username']) ?></td>
-                        <td><?= esc($user['full_name']) ?></td>
-                        <td>
-                            <a href="<?= site_url('users/edit/' . $user['id']) ?>">
-                                Edit
-                            </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+    <?= view('partials/navigation') ?>
+    <main class="page-shell">
+        <div class="page-heading">
+            <div><p class="eyebrow">Directory</p><h1>Users</h1></div>
+            <a class="button" href="<?= site_url('users/new') ?>">Add user</a>
+        </div>
+        <?php if ($message = session()->getFlashdata('success')): ?>
+            <p class="notice notice-success" role="status"><?= esc($message) ?></p>
+        <?php endif; ?>
+        <section class="content-card">
+            <?php if (empty($users)): ?>
+                <p class="empty-state">No user accounts yet. Add a user to get started.</p>
             <?php else: ?>
-                <tr>
-                    <td colspan="5">No user accounts found.</td>
-                </tr>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Avatar</th><th>ID</th><th>Username</th><th>Full name</th><th><span class="sr-only">Actions</span></th></tr></thead>
+                        <tbody>
+                        <?php foreach ($users as $user): ?>
+                            <?php $avatar = ! empty($user['avatar']) ? $user['avatar'] : 'avatar-placeholder.png'; ?>
+                            <tr>
+                                <td><img class="avatar" src="<?= base_url('uploads/avatars/' . rawurlencode($avatar)) ?>" alt="Avatar for <?= esc($user['full_name']) ?>"></td>
+                                <td><?= esc($user['id']) ?></td>
+                                <td><?= esc($user['username']) ?></td>
+                                <td class="primary-cell"><?= esc($user['full_name']) ?></td>
+                                <td><a class="text-link" href="<?= site_url('users/edit/' . $user['id']) ?>">Edit</a></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             <?php endif; ?>
-        </tbody>
-    </table>
+        </section>
+    </main>
 </body>
 </html>

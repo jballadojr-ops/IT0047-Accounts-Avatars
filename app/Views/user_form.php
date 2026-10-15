@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="<?= base_url('style.css') ?>">
 </head>
 <body>
+    <?= view('partials/navigation') ?>
+    <main class="page-shell">
     <h1><?= !empty($user) ? 'Edit User' : 'New User' ?></h1>
 
     <?php if (!empty($errors)): ?>
-        <ul style="color: red;">
+        <ul class="error-list">
             <?php foreach ($errors as $error): ?>
                 <li><?= esc($error) ?></li>
             <?php endforeach; ?>
@@ -71,5 +73,6 @@
 
         <a href="<?= site_url('users') ?>">Cancel</a>
     </form>
+    </main>
 </body>
 </html>

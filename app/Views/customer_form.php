@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="<?= base_url('style.css') ?>">
 </head>
 <body>
+    <?= view('partials/navigation') ?>
+    <main class="page-shell">
     <h1><?= isset($customer['id']) ? 'Edit Customer' : 'New Customer' ?></h1>
 
     <?php if (! empty($errors)): ?>
-        <ul style="color: red;">
+        <ul class="error-list">
             <?php foreach ($errors as $error): ?>
                 <li><?= esc($error) ?></li>
             <?php endforeach; ?>
@@ -66,5 +68,6 @@
 
         <a href="<?= site_url('customers') ?>">Cancel</a>
     </form>
+    </main>
 </body>
 </html>
